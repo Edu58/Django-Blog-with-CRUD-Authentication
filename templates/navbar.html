@@ -2,8 +2,11 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home' %}">Blog</a>
 
+    {% if user.is_authenticated %}
     <div>
-        <a href="{% url 'add_post' %}">Add Post</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'add_post' %}">Add Post</a>
+        <a class="btn btn-danger btn-sm" href="{% url 'logout' %}">logout</a>
     </div>
+    {% endif %}
   </div>
 </nav>

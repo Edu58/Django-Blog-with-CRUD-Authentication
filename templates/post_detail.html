@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
+    <div class="container mt-2">
         <h2>{{ post.title }}</h2>
-        <a href="{% url 'by_category' post.id %}">{{ post.category }}</a>
+        <a href="{% url 'by_category' post.id %}" class="text-decoration-none fw-bold badge bg-primary">{{ post.category }}</a>
 
-        <article>
+        <article class="mt-2">
             {{ post.content }}
         </article>
     </div>

@@ -1,11 +1,11 @@
-from multiprocessing import context
+from django.contrib.auth.decorators import login_required
 from webbrowser import get
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Post
 from.forms import NewPostForm, UpdatePostForm
 
 
-# Create your views here.
+@login_required(login_url='accounts/login/')
 def home(request):
     all_posts = Post.objects.all()
 
@@ -13,6 +13,7 @@ def home(request):
     return render(request, 'index.html', context)
 
 
+@login_required(login_url='accounts/login/')
 def by_category(request, category_id):
     all_in_category = Post.objects.filter(category__id=category_id)
 
@@ -21,6 +22,7 @@ def by_category(request, category_id):
     return render(request, 'category.html', context)
 
 
+@login_required(login_url='accounts/login/')
 def add_post(request):
     form = NewPostForm()
 
@@ -36,6 +38,7 @@ def add_post(request):
     return render(request, 'add_post.html', context)
 
 
+@login_required(login_url='accounts/login/')
 def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
 
@@ -44,6 +47,7 @@ def post_detail(request, id):
     return render(request, 'post_detail.html', context)
 
 
+@login_required(login_url='accounts/login/')
 def update_post(request, id):
     post = get_object_or_404(Post, pk=id)
 
@@ -61,6 +65,7 @@ def update_post(request, id):
     return render(request, 'update_post.html', context)
 
 
+@login_required(login_url='accounts/login/')
 def delete_post(request, id):
     post = get_object_or_404(Post, pk=id)
 

@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<ul class="list-group">
-    {% for post in posts %}
-    <li class="list-group-item">
-        <div>
-            <a href="{% url 'by_category' post.category.id %}">{{post.category}}</a>
-        </div>
-        <a href="{% url 'post_detail' post.id %}" class="text-decoration-none text-primary fs-5">{{ post.title }}</a> - 
-        <a href="{% url 'post_update' post.id %}" class="ms-3">Update</a>
-        <a href="{% url 'delete_post' post.id %}" class="ms-3">Delete</a>
-    </li>
+<div class="container mt-2">
+    <ul class="list-group">
+        {% for post in posts %}
+        <li class="list-group-item my-1">
+            <div>
+                <a href="{% url 'by_category' post.category.id %}" class="text-decoration-none fw-bold badge bg-primary">{{post.category}}</a>
+            </div>
+            <div class="my-2">
+                <a href="{% url 'post_detail' post.id %}"
+                    class="text-decoration-none text-primary fs-5">{{ post.title }}</a>
+            </div>
+            <div>
+                <a href="{% url 'post_update' post.id %}" class="text-decoration-none fw-bold ">Update</a> | 
+                <a href="{% url 'delete_post' post.id %}" class="text-decoration-none fw-bold ">Delete</a>
+            </div>
+        </li>
 
-    {% endfor %}
-</ul>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock content %}

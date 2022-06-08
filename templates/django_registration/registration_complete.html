@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block styles %}
+{{block.super}}
+<link rel="stylesheet" href="{% static 'css/registration.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mt-5">
+        <h3 class="text-success">Registration successful</h3>
+        <p class="text-center fs-4 text-decoration-none fw-bold"><a href="{% url 'login' %}" class="btn btn-success">Log in</a> </p>
+    </div>
+</div>
+
+{% endblock %}
