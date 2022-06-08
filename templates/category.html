@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<ul class="list-group">
+    {% for post in posts %}
+    <li class="list-group-item">
+        {{ post.title }}
+    </li>
+
+    {% endfor %}
+</ul>
+{% endblock content %}
