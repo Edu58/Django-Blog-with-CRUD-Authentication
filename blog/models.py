@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 choices = (
     ('coding', 'coding'),
@@ -23,3 +24,19 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_post_likes(self):
+        return self.like_set.all().count()
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f'{self.post} liked by -> {self.user.username}'
+
+    @classmethod
+    def get_likes(cls, post_obj):
+        return post_obj.like_set.all().count()

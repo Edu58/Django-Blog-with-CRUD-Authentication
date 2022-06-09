@@ -12,12 +12,15 @@
                 <a href="{% url 'post_detail' post.id %}"
                     class="text-decoration-none text-primary fs-5">{{ post.title }}</a>
             </div>
+            <p>
+                {{ post.like_set.all|length}} likes
+            </p>
             <div>
                 <a href="{% url 'post_update' post.id %}" class="text-decoration-none fw-bold ">Update</a> | 
-                <a href="{% url 'delete_post' post.id %}" class="text-decoration-none fw-bold ">Delete</a>
+                <a href="{% url 'delete_post' post.id %}" class="text-decoration-none fw-bold ">Delete</a> |
+                <a href="{% url 'like_post' post.id %}" class="text-decoration-none fw-bold ">like</a>
             </div>
         </li>
-
         {% endfor %}
     </ul>
 </div>

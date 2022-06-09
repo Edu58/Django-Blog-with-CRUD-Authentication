@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from webbrowser import get
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Post
+from django.urls import reverse
+from .models import Post, Like
 from.forms import NewPostForm, UpdatePostForm
 
 
@@ -41,8 +41,8 @@ def add_post(request):
 @login_required(login_url='accounts/login/')
 def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
-
-    context = {'post': post}
+    likes = post.get_post_likes()
+    context = {'post': post, 'likes': likes }
 
     return render(request, 'post_detail.html', context)
 
@@ -72,3 +72,15 @@ def delete_post(request, id):
     if post:
         post.delete()
         return redirect('home')
+
+
+@login_required(login_url='accounts/login/')
+def like_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+
+    new_like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+    if not created:
+        new_like.delete()
+
+    return redirect(reverse('home'))
