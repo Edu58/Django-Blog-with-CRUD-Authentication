@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from .models import Post, Like
+from .models import Category, Post, Like
 from.forms import NewPostForm, UpdatePostForm
 
 
@@ -15,9 +15,10 @@ def home(request):
 
 @login_required(login_url='accounts/login/')
 def by_category(request, category_id):
+    category = Category.objects.get(id=category_id)
     all_in_category = Post.objects.filter(category__id=category_id)
 
-    context = {'posts':all_in_category}
+    context = {'posts':all_in_category, 'category': category}
 
     return render(request, 'category.html', context)
 
@@ -42,7 +43,17 @@ def add_post(request):
 def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     likes = post.get_post_likes()
-    context = {'post': post, 'likes': likes }
+
+    # liked = False
+    # if post:
+    #     if post.likes.filter(id=request.user.id).exists():
+    #         post.likes.remove(request.user)
+    #         liked = False
+    #     else:
+    #         post.likes.add(request.user)
+    #         liked = True
+
+    context = {'post': post, 'likes': likes}
 
     return render(request, 'post_detail.html', context)
 
@@ -84,3 +95,22 @@ def like_post(request, post_id):
         new_like.delete()
 
     return redirect(reverse('home'))
+
+
+# def like_post(request, post_id):
+#     post = get_object_or_404(Post, pk=post_id)
+
+#     liked = False
+#     if post:
+#         if post.likes.filter(id=request.user.id).exists():
+#             post.likes.remove(request.user)
+#             liked = False
+#         else:
+#             post.likes.add(request.user)
+#             liked = True
+
+#     return redirect(reverse('post_detail', args=[str(post_id)]))
+
+@login_required(login_url='accounts/login/')
+def profile(request):
+    return render(request, 'profile.html')

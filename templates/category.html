@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="container mt-2">
+    <p class="fs-4 fw-bold text-center">{{ category.name|title }}</p>
     <ul class="list-group">
         {% for post in posts %}
         <li class="list-group-item my-1">

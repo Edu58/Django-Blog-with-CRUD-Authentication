@@ -5,6 +5,7 @@
     {% if user.is_authenticated %}
     <div>
         <a class="btn btn-primary btn-sm" href="{% url 'add_post' %}">Add Post</a>
+        <a class="btn btn-success btn-sm" href="{% url 'profile' %}">Profile</a>
         <a class="btn btn-danger btn-sm" href="{% url 'logout' %}">logout</a>
     </div>
     {% endif %}

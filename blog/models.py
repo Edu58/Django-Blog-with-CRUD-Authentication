@@ -1,6 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_pic = models.ImageField(default='tech.jpg', upload_to='photos/', null=True, blank=True)
+    bio = models.TextField(max_length=300, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.user.username
+
+
 choices = (
     ('coding', 'coding'),
     ('sports', 'sports'),
@@ -21,9 +31,13 @@ class Post(models.Model):
     content = models.TextField(null=False, blank=False)
     created_on = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, null=False, blank=False, related_name='posts', on_delete=models.CASCADE)
+    # likes = models.ManyToManyField(User)
 
     def __str__(self) -> str:
         return self.title
+
+    # def total_likes(self):
+    #     return self.likes.count()
 
     def get_post_likes(self):
         return self.like_set.all().count()
@@ -35,7 +49,7 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'{self.post} liked by -> {self.user.username}'
+        return f'{self.user}'
 
     @classmethod
     def get_likes(cls, post_obj):

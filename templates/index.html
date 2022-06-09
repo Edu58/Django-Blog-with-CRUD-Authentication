@@ -6,19 +6,29 @@
         {% for post in posts %}
         <li class="list-group-item my-1">
             <div>
-                <a href="{% url 'by_category' post.category.id %}" class="text-decoration-none fw-bold badge bg-primary">{{post.category}}</a>
+                <a href="{% url 'by_category' post.category.id %}"
+                    class="text-decoration-none fw-bold badge bg-primary">{{post.category}}</a>
             </div>
             <div class="my-2">
                 <a href="{% url 'post_detail' post.id %}"
                     class="text-decoration-none text-primary fs-5">{{ post.title }}</a>
             </div>
+
+
             <p>
                 {{ post.like_set.all|length}} likes
             </p>
+
+            {% comment %}
+            <p>
+                {{ post.likes.count}} likes
+            </p>
+            {% endcomment %}
+
             <div>
-                <a href="{% url 'post_update' post.id %}" class="text-decoration-none fw-bold ">Update</a> | 
+                <a href="{% url 'post_update' post.id %}" class="text-decoration-none fw-bold ">Update</a> |
                 <a href="{% url 'delete_post' post.id %}" class="text-decoration-none fw-bold ">Delete</a> |
-                <a href="{% url 'like_post' post.id %}" class="text-decoration-none fw-bold ">like</a>
+                <a href="{% url 'like_post' post.id %}" class="text-decoration-none fw-bold">like</a>
             </div>
         </li>
         {% endfor %}
